@@ -11,35 +11,60 @@ import javax.faces.context.FacesContext;
 @RequestScoped
 //@SessionScoped
 public class KredytBB {
-	private String x;
-	private String y;
-	private Double result;
+	private String kwota;
+	private String lat;
+	private String procent;
+	private Double wynik;
 
 	@Inject
 	FacesContext ctx;
 	
-	public String getX() {
-		return x;
+	public String getKwota() {
+		return kwota;
 	}
-	public void setX(String x) {
-		this.x = x;
+	public void setKwota(String kwota) {
+		this.kwota = kwota;
 	}
-	public String getY() {
-		return y;
+	public String getLat() {
+		return lat;
 	}
-	public void setY(String y) {
-		this.y = y;
+	public void setLat(String lat) {
+		this.lat = lat;
 	}
-	public Double getResult() {
-		return result;
+	public String getProcent() {
+		return procent;
 	}
-	public void setResult(Double result) {
-		this.result = result;
+	public void setProcent(String procent) {
+		this.procent = procent;
 	}
-
+	public Double getWynik() {
+		return wynik;
+	}
 
 
 	public String oblicz() {
+		try {
+			double kwota = Double.parseDouble(this.kwota);
+			double lat = Double.parseDouble(this.lat);
+			int procent = Integer.parseInt(this.procent);
+			double procent2;
+			
+			switch(procent) {
+				case 1: procent2 = 3.5; break;
+				case 2: procent2 = 5.0; break;
+				default: procent2 = 8.0;
+			}
+
+			wynik = kwota / (lat*12);
+			wynik += (procent * wynik / 100);
+
+			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operacja wykonana poprawnie", null));
+			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Wynik: rata miesiêczna = "+wynik, null));
+			
+		} catch (Exception e) {
+			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d podczas przetwarzania parametrów", null));
+		}
+		
 		return null;
 	}
 }

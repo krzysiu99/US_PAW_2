@@ -12,13 +12,30 @@
 	<h1>Kredyt</h1>
 
 	<h:form id="bla">
-  		x: <h:inputText value="#{kredytBB.x}" />
+  		Kwota: <h:inputText value="#{kredytBB.kwota}" />
 		<br />
-  		y: <h:inputText value="#{kredytBB.y}" />
+  		Okres: <h:selectOneMenu value = "#{kredytBB.lat}"> 
+		   <f:selectItem itemValue = "1" itemLabel = "rok" /> 
+		   <f:selectItem itemValue = "2" itemLabel = "2 lata" /> 
+		   <f:selectItem itemValue = "3" itemLabel = "3 lata" /> 
+		   <f:selectItem itemValue = "4" itemLabel = "4 lata" /> 
+		   <f:selectItem itemValue = "5" itemLabel = "5 lat" /> 
+		   <f:selectItem itemValue = "6" itemLabel = "6 lat" /> 
+		   <f:selectItem itemValue = "7" itemLabel = "7 lat" /> 
+		   <f:selectItem itemValue = "8" itemLabel = "8 lat" /> 
+		   <f:selectItem itemValue = "9" itemLabel = "9 lat" /> 
+		   <f:selectItem itemValue = "10" itemLabel = "10 lat" /> 
+		</h:selectOneMenu> 
+		<br />
+		Procent: <h:selectOneMenu value = "#{kredytBB.procent}"> 
+		   <f:selectItem itemValue = "1" itemLabel = "3,5 %" /> 
+		   <f:selectItem itemValue = "2" itemLabel = "5 %" /> 
+		   <f:selectItem itemValue = "3" itemLabel = "8 %" /> 
+		</h:selectOneMenu> 
 		<br />
 		<h:messages id="msg" />
 
-		<h:commandButton value="Dodaj" action="#{kredytBB.oblicz()}"/>
+		<h:commandButton value="Oblicz" action="#{kredytBB.oblicz()}"/>
 		<br />
 	</h:form>
 
