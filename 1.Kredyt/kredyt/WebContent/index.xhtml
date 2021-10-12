@@ -20,7 +20,9 @@
 		<h:form id="form">
 			<h:panelGrid id="grid" columns="3" cellpadding="7">
 		         <p:outputLabel for="kwota" value="Kwota:"/>
-		         <p:inputText id="kwota" required="true" value="#{kredytBB.kwota}"/>
+		         <p:inputText id="kwota" required="true" value="#{kredytBB.kwota}" requiredMessage="Podaj kwotę" validatorMessage="Podaj liczbę z przedziału od 0 do 9999.99">
+		         	<f:validateDoubleRange minimum="0.00" maximum="9999.99" />
+		         </p:inputText>
 		         <p:message for="kwota"/>
 		
 		         <p:outputLabel for="okres" value="Okres:"/>
