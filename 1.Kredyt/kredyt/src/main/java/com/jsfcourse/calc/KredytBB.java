@@ -2,6 +2,9 @@ package com.jsfcourse.calc;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import java.io.Serializable;
+
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -10,7 +13,10 @@ import javax.faces.context.FacesContext;
 @Named
 @RequestScoped
 //@SessionScoped
+//public class KredytBB implements Serializable {
 public class KredytBB {
+	//private static final long serialVersionUID = -5801556047172890492L;
+	
 	private String kwota;
 	private String lat;
 	private String procent;
@@ -40,9 +46,8 @@ public class KredytBB {
 	public Double getWynik() {
 		return wynik;
 	}
-
-
-	public String oblicz() {
+	
+	public String oblicz(){
 		try {
 			double kwota = Double.parseDouble(this.kwota);
 			double lat = Double.parseDouble(this.lat);
@@ -56,15 +61,27 @@ public class KredytBB {
 			}
 
 			wynik = kwota / (lat*12);
-			wynik += (procent * wynik / 100);
+			wynik += (procent2 * wynik / 100);
 
 			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operacja wykonana poprawnie", null));
-			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Wynik: rata miesiêczna = "+wynik, null));
+			return wynik.toString();
 			
 		} catch (Exception e) {
 			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³¹d podczas przetwarzania parametrów", null));
+			return null;
 		}
-		
+	}
+
+
+	public String wykonaj() {
+		if(oblicz() != null)
+			return "wynik";
+		else return null;
+	}
+	
+	public String wykonajAJAX() {
+		if(oblicz() != null)
+			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Rata miesiêczna: "+wynik, null));
 		return null;
 	}
 }

@@ -3,41 +3,57 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<title>Kredyt</title>
 </h:head>
 <h:body>
+	<style type="text/css">
+	    button.ui-button {
+	        margin-right: .5rem;
+	    }
+	</style>
 
-	<h1>Kredyt</h1>
-
-	<h:form id="bla">
-  		Kwota: <h:inputText value="#{kredytBB.kwota}" />
-		<br />
-  		Okres: <h:selectOneMenu value = "#{kredytBB.lat}"> 
-		   <f:selectItem itemValue = "1" itemLabel = "rok" /> 
-		   <f:selectItem itemValue = "2" itemLabel = "2 lata" /> 
-		   <f:selectItem itemValue = "3" itemLabel = "3 lata" /> 
-		   <f:selectItem itemValue = "4" itemLabel = "4 lata" /> 
-		   <f:selectItem itemValue = "5" itemLabel = "5 lat" /> 
-		   <f:selectItem itemValue = "6" itemLabel = "6 lat" /> 
-		   <f:selectItem itemValue = "7" itemLabel = "7 lat" /> 
-		   <f:selectItem itemValue = "8" itemLabel = "8 lat" /> 
-		   <f:selectItem itemValue = "9" itemLabel = "9 lat" /> 
-		   <f:selectItem itemValue = "10" itemLabel = "10 lat" /> 
-		</h:selectOneMenu> 
-		<br />
-		Procent: <h:selectOneMenu value = "#{kredytBB.procent}"> 
-		   <f:selectItem itemValue = "1" itemLabel = "3,5 %" /> 
-		   <f:selectItem itemValue = "2" itemLabel = "5 %" /> 
-		   <f:selectItem itemValue = "3" itemLabel = "8 %" /> 
-		</h:selectOneMenu> 
-		<br />
-		<h:messages id="msg" />
-
-		<h:commandButton value="Oblicz" action="#{kredytBB.oblicz()}"/>
-		<br />
-	</h:form>
+	<p:panel header="Kredyt">
+	
+		<h:form id="form">
+			<h:panelGrid id="grid" columns="3" cellpadding="7">
+		         <p:outputLabel for="kwota" value="Kwota:"/>
+		         <p:inputText id="kwota" required="true" value="#{kredytBB.kwota}"/>
+		         <p:message for="kwota"/>
+		
+		         <p:outputLabel for="okres" value="Okres:"/>
+		         <p:selectOneMenu id="okres" value="#{kredytBB.lat}" required="true"> 
+				   <f:selectItem itemValue = "1" itemLabel = "rok" /> 
+				   <f:selectItem itemValue = "2" itemLabel = "2 lata" /> 
+				   <f:selectItem itemValue = "3" itemLabel = "3 lata" /> 
+				   <f:selectItem itemValue = "4" itemLabel = "4 lata" /> 
+				   <f:selectItem itemValue = "5" itemLabel = "5 lat" /> 
+				   <f:selectItem itemValue = "6" itemLabel = "6 lat" /> 
+				   <f:selectItem itemValue = "7" itemLabel = "7 lat" /> 
+				   <f:selectItem itemValue = "8" itemLabel = "8 lat" /> 
+				   <f:selectItem itemValue = "9" itemLabel = "9 lat" /> 
+				   <f:selectItem itemValue = "10" itemLabel = "10 lat" /> 
+				 </p:selectOneMenu> 
+		         <p:message for="okres" display="text"/>
+		
+		         <p:outputLabel for="procent" value="Procent:"/>
+		         <p:selectOneMenu id="procent" value="#{kredytBB.procent}" required="true"> 
+				   <f:selectItem itemValue = "1" itemLabel = "3,5 %" /> 
+				   <f:selectItem itemValue = "2" itemLabel = "5 %" /> 
+				   <f:selectItem itemValue = "3" itemLabel = "8 %" /> 
+				</p:selectOneMenu> 
+		         <p:message for="procent" display="tooltip"/>
+		         
+	
+				<p:commandButton value="Oblicz" action="#{kredytBB.wykonaj()}" update="@form" />
+				<p:commandButton value="Oblicz (AJAX)" action="#{kredytBB.wykonajAJAX()}" update="msg" />
+	        </h:panelGrid>
+	        
+	        <p:messages showDetail="true" id="msg" />
+		</h:form>
+	</p:panel>
 
 </h:body>
 </html>
