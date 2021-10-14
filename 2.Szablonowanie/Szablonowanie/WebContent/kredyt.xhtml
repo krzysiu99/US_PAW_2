@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	
+<ui:composition template="/templemates/Progressus/index.xhtml">
+
+	<ui:define name="menu">
+		<li><a href="index.jsf">Strona Główna</a></li>
+		<li class="active"><a href="kredyt.jsf">Kredyt</a></li>
+		<li><a href="kalkulator.jsf">Kalkulator</a></li>
+	</ui:define>
+
+	<ui:define name="strona">
+
+		<h2 class="text-center top-space">Kalkulator kredytowy</h2>
+		<br />
+
+		<h:form id="form">
+			<h:panelGrid id="grid" columns="3" cellpadding="7">
+		         <p:outputLabel for="kwota" value="Kwota:"/>
+		         <p:inputText id="kwota" required="true" value="#{kredytBB.kwota}" requiredMessage="Podaj kwotę" validatorMessage="Podaj liczbę z przedziału od 1 do 9999.99">
+		         	<f:validateDoubleRange minimum="1.00" maximum="9999.99" />
+		         </p:inputText>
+		         <p:message for="kwota" display="text"/>
+		
+		         <p:outputLabel for="okres" value="Okres:"/>
+		         <p:inputText id="okres" value="#{kredytBB.lat}" required="true" requiredMessage="Podaj ilość lat" validatorMessage="Podaj liczbę z przedziału od 1 do 10"> 
+		         	<f:validateLongRange minimum="1" maximum="10" />
+		         </p:inputText>
+		         <p:message for="okres" display="text"/>
+		
+		         <p:outputLabel for="procent" value="Procent:"/>
+		         <p:inputText id="procent" value="#{kredytBB.procent}" required="true" requiredMessage="Podaj procent" validatorMessage="Podaj liczbę z przedziału od 1 do 100"> 
+		         	<f:validateLongRange minimum="1" maximum="100" />
+		         </p:inputText>
+		         <p:message for="procent" display="text"/>
+		         
+	
+				<p:commandButton value="Oblicz" action="#{kredytBB.wykonaj()}" update="@form" />
+				<p:commandButton value="Oblicz (AJAX)" action="#{kredytBB.wykonajAJAX()}" update="msg" />
+	        </h:panelGrid>
+	        
+	        <p:messages showDetail="true" id="msg" />
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>
+</html>
