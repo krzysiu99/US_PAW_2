@@ -18,30 +18,34 @@ public class KredytBB {
 	//private static final long serialVersionUID = -5801556047172890492L;
 	
 	private String kwota;
-	private String lat;
-	private String procent;
+	private String lat = "1";
+	private String procent = "1";
 	private Double wynik;
 
 	@Inject
 	FacesContext ctx;
 	
 	public String getKwota() {
-		return kwota;
+		return this.kwota;
 	}
 	public void setKwota(String kwota) {
 		this.kwota = kwota;
 	}
 	public String getLat() {
-		return lat;
+		return this.lat;
 	}
 	public void setLat(String lat) {
 		this.lat = lat;
 	}
 	public String getProcent() {
-		return procent;
+		return this.procent;
 	}
 	public void setProcent(String procent) {
-		this.procent = procent;
+		if(procent == "1")
+			this.procent = "3.5";
+		else if(procent == "2")
+			this.procent = "5.0";
+		else this.procent = "8.0";
 	}
 	public Double getWynik() {
 		return wynik;
@@ -51,17 +55,10 @@ public class KredytBB {
 		try {
 			double kwota = Double.parseDouble(this.kwota);
 			double lat = Double.parseDouble(this.lat);
-			int procent = Integer.parseInt(this.procent);
-			double procent2;
-			
-			switch(procent) {
-				case 1: procent2 = 3.5; break;
-				case 2: procent2 = 5.0; break;
-				default: procent2 = 8.0;
-			}
+			double procent = Double.parseDouble(this.procent);
 
+			kwota += procent / 100 * kwota;
 			wynik = kwota / (lat*12);
-			wynik += (procent2 * wynik / 100);
 
 			ctx.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Operacja wykonana poprawnie", null));
 			return wynik.toString();
