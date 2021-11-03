@@ -9,32 +9,29 @@
 	<title>Aktualności test</title>
 </h:head>
 <h:body>
-	<style type="text/css">
-	    button.ui-button {
-	        margin-right: .5rem;
-	    }
-	</style>
-
-	<h:form id="form-table" style="margin-bottom:1em;">
-
-		<p:dataTable value="#{aktualnosciBB.list}" var="p">
-
-			<p:column priority="5">
-				<f:facet name="header">
-					<h:outputText value="imię" />
-				</f:facet>
-				<h:outputText value="#{p.tytul}" />
-			</p:column>
-
-			<p:column>
-				<f:facet name="header">
-					<h:outputText value="nazwisko" />
-				</f:facet>
-				<h:outputText value="#{p.tresc}" />
-			</p:column>
-
-		</p:dataTable>
-	</h:form>
+	<ui:composition template="/templemate/szablon.xhtml">
+		<ui:define name="strona">
+		
+			<h:form id="form-table" style="margin-bottom:1em;">
+				<p:dataTable value="#{aktualnosciBB.list}" var="p">
+		
+					<p:column priority="5">
+						<f:facet name="header">
+							<h:outputText value="imię" />
+						</f:facet>
+						<h:outputText value="#{p.tytul}" />
+					</p:column>
+					<p:column>
+						<f:facet name="header">
+							<h:outputText value="nazwisko" />
+						</f:facet>
+						<h:outputText value="#{p.tresc}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+			
+		</ui:define>
+	</ui:composition>
 
 </h:body>
 </html>
