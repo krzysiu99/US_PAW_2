@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:ui="http://java.sun.com/jsf/facelets"
 	>
     <body>
 	    <ui:composition>
 	
-		<div id="logo">
-			<!-- <img src="#{resource['templemate:images/logo.png']}" alt="logo" /> -->
-			<h1>Porady Informatyczne</h1>
-		</div>
-		
-		<div id="nav">
-			<a href="#">Aktualności</a>
-			<a href="#">Kategorie</a>
-			<a href="#">Logowanie</a>
-			<a href="#">Rejestracja</a>
-		</div>
+			<div id="nav">
+	            <nav>
+	                <a href="" title="Strona Główna"><img src="#{resource['images:logo.png']}" alt="nagłówek"/></a>
+	                <div id="login">
+	                    <span style='font-weight: bold'>użytkownik:</span> <span class="e">[rola] user</span>
+	                    <a class="wyloguj" href="wyloguj">WYLOGUJ</a>
+	                    <a class="wyloguj" href="wyloguj" style='margin-left: 20px;background: rgb(114 41 194)'>zmień hasło</a>
+	                </div>
+	                <ol>
+	                    <li><a href="#" class="activ">Aktualności</a></li>
+	                    <li><a href="#" class="activ">Kategorie</a></li>
+	                    <li><a href="#" class="activ">Użytkownicy</a></li>
+	                    <li><a href="#" class="activ">Logowanie</a></li>
+	                    <li><a href="#" class="activ">Rejestracja</a></li>
+	                </ol>
+	            </nav>
+	        </div>
 				
 	    </ui:composition>
     </body>

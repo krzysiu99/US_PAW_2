@@ -5,38 +5,41 @@
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
+	
+<f:metadata>
+	<f:viewParam name="post" value="#{PostBB.post.Pid}"
+		converterMessage="Nieoczekiwany błąd"/>
+	<f:event type="preRenderView" listener="#{PostBB.onLoad()}" />
+</f:metadata>
+	
+	
 <h:head>
-	<title>Aktualności test</title>
+	<title>Pokaż post</title>
 </h:head>
 <h:body>
 	<ui:composition template="/templemate/szablon.xhtml">
 		<ui:define name="strona">
 		
 		
-			<ui:repeat value="#{aktualnosciBB.list}" var="p">
 				    <p:panel>
 				    	<f:facet name="header">
-				        	<p:link outcome="Post" value="#{p.tytul}">
-						        <f:param name="pid" value="#{p.pid}"/>
-						    </p:link>
+				        	#{PostBB.post.tytul}
 				        </f:facet>
 				        <p class="p-m-0">
-				            #{p.tresc}
+				            #{PostBB.post.tresc}
 				        </p>
 				        <f:facet name="actions">
-				        	<p:link outcome="Uzytkownik" value="autor: #{p.uzytkownik.nick}">
-						        <f:param name="uid" value="#{p.uzytkownik.uid}"/>
+				        	<p:link outcome="Uzytkownik" value="autor: #{PostBB.post.uzytkownik.nick}">
+						        <f:param name="uid" value="#{PostBB.post.uzytkownik.uid}"/>
 						    </p:link>
 				        </f:facet>
 				        <f:facet name="footer">
-				        	<p:link outcome="Kategoria" value="#{p.kategoria}">
-						        <f:param name="nazwa" value="#{p.kategoria}"/>
+				        	<p:link outcome="Kategoria" value="#{PostBB.post.kategoria}">
+						        <f:param name="nazwa" value="#{PostBB.post.kategoria}"/>
 						    </p:link>
-						    <span class="right">#{p.dataPublikacji}</span>
+						    <span class="right">#{PostBB.post.dataPublikacji}</span>
 				        </f:facet>
 				    </p:panel>
-
-	    	</ui:repeat>
 			
 		</ui:define>
 	</ui:composition>

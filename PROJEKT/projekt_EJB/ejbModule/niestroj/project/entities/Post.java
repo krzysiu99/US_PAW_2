@@ -41,7 +41,7 @@ public class Post implements Serializable {
 	public Post() {
 	}
 
-	public int getPid() {
+	public Integer getPid() {
 		return this.pid;
 	}
 
