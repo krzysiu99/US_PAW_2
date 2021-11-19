@@ -2,6 +2,8 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://java.sun.com/jstl/core"
 	>
     <body>
 	    <ui:composition>
@@ -10,16 +12,21 @@
 	            <nav>
 	                <a href="" title="Strona Główna"><img src="#{resource['images:logo.png']}" alt="nagłówek"/></a>
 	                <div id="login">
-	                    <span style='font-weight: bold'>użytkownik:</span> <span class="e">[rola] user</span>
-	                    <a class="wyloguj" href="wyloguj">WYLOGUJ</a>
-	                    <a class="wyloguj" href="wyloguj" style='margin-left: 20px;background: rgb(114 41 194)'>zmień hasło</a>
+		                <c:if test="#{not empty remoteClient.details.nick}">
+		               		<h:form style="display:inline;">
+			                    <span style='font-weight: bold'>użytkownik:</span> <span class="e">[#{remoteClient.details.rolaTekst}] #{remoteClient.details.nick}</span>
+			                    <h:commandButton class="wyloguj" style="heighT: 26px;cursor:pointer" value="WYLOGUJ" action="#{loginBB.doLogout()}" />
+		                    </h:form>
+		               	</c:if>
+		               	<c:if test="#{empty remoteClient.details.nick}">
+		               		<span class="e">Użytkownik niezalogowany</span>
+		               	</c:if>
 	                </div>
 	                <ol>
-	                    <li><a href="#" class="activ">Aktualności</a></li>
+	                    <li><h:link value="Aktualności" outcome="Aktualnosci" /></li>
 	                    <li><a href="#" class="activ">Kategorie</a></li>
-	                    <li><a href="#" class="activ">Użytkownicy</a></li>
-	                    <li><a href="#" class="activ">Logowanie</a></li>
-	                    <li><a href="#" class="activ">Rejestracja</a></li>
+	                    <li><h:link value="Logowanie" outcome="Logowanie" /></li>
+	                    <li><h:link value="Rejestracja" outcome="Rejestracja" /></li>
 	                </ol>
 	            </nav>
 	        </div>

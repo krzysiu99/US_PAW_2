@@ -150,6 +150,42 @@ font.e {
 	float: right;
 	margin-righT: 15px;
 }
+
+
+.logon {
+    line-height: 35px;
+    width: 300px;
+    margin: 10px 0;
+    text-align: center;
+    font-family: "Inconsolata",monospace;
+    color: black;
+    border: solid 2px grey;
+    font-size: 20px;
+}
+.logimg{
+    width: 25px;
+    vertical-align: middle;
+    opacity: 0.5;
+ 	 margin-right: 5px;
+}
+.logform{
+	margin: 0 auto;
+	width: max-content;
+}
+.logform h1{
+	text-align: center;
+	font-weighT: normal;
+}
+.logsub{
+	color: white;
+	background: #636363;
+	padding: 10px 15px;
+	margin: 0 auto;
+	bordeR: none;
+	font-size: 1.2em;
+	text-align: center;
+}
+
 /* -------------------------------- footer --------------------------------------- */
 #footer{
 	widtH: 1162px;
