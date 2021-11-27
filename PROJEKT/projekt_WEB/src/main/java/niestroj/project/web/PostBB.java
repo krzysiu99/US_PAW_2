@@ -3,13 +3,18 @@ package niestroj.project.web;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
+
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import niestroj.project.dao.KomentarzDAO;
 import niestroj.project.dao.PostDAO;
+import niestroj.project.entities.Komentarz;
 import niestroj.project.entities.Post;
 
 @Named
@@ -21,7 +26,13 @@ public class PostBB implements Serializable{
 	private Post loaded = null;
 
 	@Inject
-	FacesContext ctx;
+	FacesContext context;
+	
+	@Inject
+	Flash flash;
+	
+	@EJB
+	KomentarzDAO komentarzDAO;
 	
 	@EJB
 	PostDAO postDAO;
@@ -32,19 +43,23 @@ public class PostBB implements Serializable{
 	}
 
 	public void onLoad() throws IOException {
-		if (!ctx.isPostback()) {
-			if (!ctx.isValidationFailed() && post.getPid() != null) {
-				loaded = postDAO.szukaj(post.getPid());
-			}
-			if (loaded != null) {
-				post = loaded;
-			} //else {
-				//post.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "BÅ‚Ä™dne uÅ¼ycie systemu", null));
-				// if (!context.isPostback()) { // possible redirect
-				// context.getExternalContext().redirect("personList.xhtml");
-				// context.responseComplete();
-				// }
-			//}
+
+		loaded = (Post) flash.get("post");
+		if (loaded != null) {
+			post = loaded;
+		} else {
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³êdne u¿ycie systemu", null));
 		}
+		
+	}
+	
+	public List<Komentarz> getList(){
+		List<Komentarz> list = komentarzDAO.lista();
+		return list;
+	}
+	
+	public String kasujKomentarz(Komentarz komentarz){
+		komentarzDAO.kasuj(komentarz);
+		return null;
 	}
 }

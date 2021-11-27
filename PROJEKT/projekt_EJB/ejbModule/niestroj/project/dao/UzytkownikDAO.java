@@ -87,8 +87,11 @@ public class UzytkownikDAO {
 		
 		ArrayList<String> roles = new ArrayList<String>();
 		
+		if (user.getRola() <= 2) {
+			roles.add("komentator");
+		}
 		if (user.getRola() <= 1) {
-			roles.add("user");
+			roles.add("autor");
 		}
 		if (user.getRola() == 0) {
 			roles.add("admin");

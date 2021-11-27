@@ -4,7 +4,9 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:fn="http://java.sun.com/jstl/functions">
 <h:head>
 	<title>Aktualności test</title>
 </h:head>
@@ -12,31 +14,49 @@
 	<ui:composition template="/templemate/szablon.xhtml">
 		<ui:define name="strona">
 		
+			<c:if test="#{not empty remoteClient.details.nick and remoteClient.details.rola == '1' or remoteClient.details.rola == '0'}">
+				<!--<h:panelGroup id="p1" rendered="#{AktualnosciBB.contains(remoteClient.roles,'autor')}">-->
+					<p:commandButton value="Dodaj nowy post"
+					action="#{aktualnosciBB.nowyPost()}" style="margin-bottom:1em;"/>
+					<!--#{remoteClient.roles}
+				</h:panelGroup>
+				#{remoteClient.roles}
+				#{AktualnosciBB.contains(remoteClient.roles,'autor')}-->
+			</c:if>
 		
+		<h:form id="form-table">
 			<ui:repeat value="#{aktualnosciBB.list}" var="p">
-				    <p:panel>
-				    	<f:facet name="header">
-				        	<p:link outcome="Post" value="#{p.tytul}">
-						        <f:param name="pid" value="#{p.pid}"/>
-						    </p:link>
-				        </f:facet>
-				        <p class="p-m-0">
-				            #{p.tresc}
-				        </p>
-				        <f:facet name="actions">
-				        	<p:link outcome="Uzytkownik" value="autor: #{p.uzytkownik.nick}">
-						        <f:param name="uid" value="#{p.uzytkownik.uid}"/>
-						    </p:link>
-				        </f:facet>
-				        <f:facet name="footer">
-				        	<p:link outcome="Kategoria" value="#{p.kategoria}">
-						        <f:param name="nazwa" value="#{p.kategoria}"/>
-						    </p:link>
-						    <span class="right">#{p.dataPublikacji}</span>
-				        </f:facet>
-				    </p:panel>
-
+			    <p:panel>
+			    	<f:facet name="header">
+			        	<p:commandButton value="#{p.tytul}"
+							action="#{aktualnosciBB.wyswietlPost(p)}" />
+			        </f:facet>
+			        <p class="p-m-0">
+			            #{p.tresc}
+			        </p>
+			        <c:if test="#{not empty remoteClient.details.nick and (remoteClient.details.rola == '0' or remoteClient.details.nick == p.uzytkownik.nick)}">
+			        <p class="edycja">
+			            <p:commandButton value="Edytuj"
+							action="#{aktualnosciBB.edytujPost(p)}" />
+						<p:commandButton value="Usuń"
+							action="#{aktualnosciBB.kasujPost(p)}" update="@form" />
+			        </p>
+			        </c:if>
+			        <f:facet name="actions">
+			        	<p:link outcome="Uzytkownik" value="autor: #{p.uzytkownik.nick}">
+					        <f:param name="uid" value="#{p.uzytkownik.uid}"/>
+					    </p:link>
+			        </f:facet>
+			        <f:facet name="footer">
+			        	<p:link outcome="Kategoria" value="#{p.kategoria}">
+					        <f:param name="nazwa" value="#{p.kategoria}"/>
+					    </p:link>
+					    <span class="right">#{p.dataPublikacji}</span>
+			        </f:facet>
+			    </p:panel>
 	    	</ui:repeat>
+	    </h:form>
+	    
 			
 		</ui:define>
 	</ui:composition>

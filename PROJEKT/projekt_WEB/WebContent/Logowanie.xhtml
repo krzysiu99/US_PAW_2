@@ -19,15 +19,13 @@
 			            <p:autoUpdate/>
 			        </p:messages>
 					
-					<h:panelGrid columns="2" cellpadding="5" styleClass="bottom-space">
-						<p:graphicImage name="images/user.png" class="logimg"/>
-						<h:inputText id="login" class="logon" a:placeholder="nick" value="#{loginBB.login}"
-							required="true"	requiredMessage="podaj login"/>
-						<p:graphicImage name="images/lock.png" class="logimg"/>
-						<h:inputSecret id="pass" class="logon" a:placeholder="hasło" value="#{loginBB.pass}"
-						required="true"	requiredMessage="podaj hasło"/>
-					</h:panelGrid>
-				
+					<p:graphicImage name="images/user.png" class="logimg"/>
+					<h:inputText id="login" class="logon" a:placeholder="nick" value="#{loginBB.login}"
+						required="true"	requiredMessage="podaj login"/><br />
+					<p:graphicImage name="images/lock.png" class="logimg"/>
+					<h:inputSecret id="pass" class="logon" a:placeholder="hasło" value="#{loginBB.pass}"
+					required="true"	requiredMessage="podaj hasło"/><br />
+
 					<h:commandButton value="Zaloguj się" class="logsub" action="#{loginBB.doLogin()}" update="msg" />
 			</h:form>
 		</ui:define>

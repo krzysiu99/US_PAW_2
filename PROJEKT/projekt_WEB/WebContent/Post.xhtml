@@ -4,12 +4,11 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jstl/core">
 	
 <f:metadata>
-	<f:viewParam name="post" value="#{PostBB.post.Pid}"
-		converterMessage="Nieoczekiwany błąd"/>
-	<f:event type="preRenderView" listener="#{PostBB.onLoad()}" />
+    <f:viewAction action="#{postBB.onLoad()}" />
 </f:metadata>
 	
 	
@@ -20,26 +19,53 @@
 	<ui:composition template="/templemate/szablon.xhtml">
 		<ui:define name="strona">
 		
-		
+			<h:form rendered="#{postBB.post != null}">
+			    <p:panel>
+			    	<f:facet name="header">
+			        	#{postBB.post.tytul}
+			        </f:facet>
+			        <p class="p-m-0">
+			            #{postBB.post.tresc}
+			        </p>
+			        <f:facet name="actions">
+			        	<p:link outcome="Uzytkownik" value="autor: #{postBB.post.uzytkownik.nick}">
+					        <f:param name="uid" value="#{postBB.post.uzytkownik.uid}"/>
+					    </p:link>
+			        </f:facet>
+			        <f:facet name="footer">
+			        	<p:link outcome="Kategoria" value="#{postBB.post.kategoria}">
+					        <f:param name="nazwa" value="#{postBB.post.kategoria}"/>
+					    </p:link>
+					    <span class="right">#{postBB.post.dataPublikacji}</span>
+			        </f:facet>
+			    </p:panel>
+			    
+			    <h1>Komentarze do tego postu</h1>
+			    
+			    <ui:repeat value="#{postBB.list}" var="k">
 				    <p:panel>
 				    	<f:facet name="header">
-				        	#{PostBB.post.tytul}
+				        	<p:link outcome="Uzytkownik" value="autor: #{k.uzytkownik.nick}">
+						        <f:param name="uid" value="#{k.uzytkownik.uid}"/>
+						    </p:link>
 				        </f:facet>
 				        <p class="p-m-0">
-				            #{PostBB.post.tresc}
+				            #{k.tresc}
 				        </p>
-				        <f:facet name="actions">
-				        	<p:link outcome="Uzytkownik" value="autor: #{PostBB.post.uzytkownik.nick}">
-						        <f:param name="uid" value="#{PostBB.post.uzytkownik.uid}"/>
-						    </p:link>
-				        </f:facet>
+				        <c:if test="#{not empty remoteClient.details.nick and (remoteClient.details.rola == '0' or remoteClient.details.nick == k.uzytkownik.nick)}">
+				        <p class="edycja">
+							<p:commandButton value="Usuń"
+								action="#{postBB.kasujKomentarz(k)}" update="@form" />
+				        </p>
+				        </c:if>
 				        <f:facet name="footer">
-				        	<p:link outcome="Kategoria" value="#{PostBB.post.kategoria}">
-						        <f:param name="nazwa" value="#{PostBB.post.kategoria}"/>
-						    </p:link>
-						    <span class="right">#{PostBB.post.dataPublikacji}</span>
+				        	#{k.czasPublikacji}
 				        </f:facet>
 				    </p:panel>
+		    	</ui:repeat>
+			    
+			    
+			  </h:form>
 			
 		</ui:define>
 	</ui:composition>

@@ -23,7 +23,8 @@ public class PostDAO {
 	}
 
 	public void kasuj(Post post) {
-		em.remove(em.merge(post));
+		if(post != null)
+			em.remove(em.merge(post));
 	}
 
 	public Post szukaj(Object id) {

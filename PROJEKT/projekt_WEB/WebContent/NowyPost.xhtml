@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jstl/core"
+	xmlns:fn="http://java.sun.com/jstl/functions">
+	
+<f:metadata>
+    <f:viewAction action="#{edytujPostBB.onLoad()}" />
+</f:metadata>
+	
+	
+<h:head>
+	<title>Aktualności test</title>
+</h:head>
+<h:body>
+	<ui:composition template="/templemate/szablon.xhtml">
+		<ui:define name="strona">
+		
+			<p:panel toggleable="false" header="Edycja postu" style="width: 700px;margin: 0 auto;">
+
+			<h:form rendered="#{edytujPostBB.post != null}">
+				<h:panelGrid columns="2" cellpadding="5">
+	
+					<h:outputLabel for="p-name" value="autor postu:" />
+					<p:inputText id="p-name" rendered="#{edytujPostBB.post.uzytkownik.nick != null}" value="#{edytujPostBB.post.uzytkownik.nick}"
+						readonly="true">
+					</p:inputText>
+					<p:inputText id="p-name2" rendered="#{edytujPostBB.post.uzytkownik.nick == null}" value="#{edytujPostBB.post.uzytkownik.nick}"
+						readonly="true">
+					</p:inputText>
+					
+					<h:outputLabel for="p-name3" value="data:" rendered="#{edytujPostBB.post.uzytkownik.nick == null}" />
+					<p:inputText id="p-name3" rendered="#{edytujPostBB.post.uzytkownik.nick == null}" value="#{edytujPostBB.post.dataPublikacji}">
+					</p:inputText>
+	
+					<h:outputLabel for="p-surname" value="tytuł:" />
+					<p:inputText id="p-surname" value="#{edytujPostBB.post.tytul}"
+						required="true" requiredMessage="podaj tytuł"
+						validatorMessage="1 - 50 znaków">
+						<f:validateLength maximum="50" minimum="1" />
+					</p:inputText>
+	
+					<h:outputLabel for="p-kat" value="kategoria:" />
+					<p:selectOneMenu id="p-kat" value="#{edytujPostBB.post.kategoria}">
+	                    <f:selectItem itemLabel="[Wybierz z listy]" itemValue=""/>
+	                    <f:selectItem itemLabel="Windows" itemValue="Windows"/>
+	                    <f:selectItem itemLabel="Google Chrome" itemValue="Google Chrome"/>
+	                    <f:selectItem itemLabel="Excel" itemValue="Excel"/>
+                	</p:selectOneMenu>
+					
+				</h:panelGrid>
+				<h:panelGrid columns="1">
+                	<p:inputTextarea rows="5" cols="80" counter="display" maxlength="1000" minlength="1" value="#{edytujPostBB.post.tresc}"
+                         counterTemplate="pozostało znaków: {0}" autoResize="false"/>
+        			<h:outputText id="display" class="p-d-block" />
+        		</h:panelGrid> 
+	
+				<p:messages id="msgs" />
+	
+				<p:commandButton value="Zapisz" action="#{edytujPostBB.saveData()}"
+					style="margin-right: 1em;" update="@form" />
+	
+				<p:button value="Anuluj" outcome="Aktualnosci" />
+			</h:form>
+	
+		</p:panel>
+			
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

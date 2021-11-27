@@ -79,7 +79,8 @@ public class Uzytkownik implements Serializable {
 	
 	public String getRolaTekst() {
 		if(this.rola == 0) return "Administrator";
-		else return "Uzytkownik";
+		else if(this.rola == 1) return "Autor";
+		else return "Komentator";
 	}
 
 	public void setRola(int rola) {

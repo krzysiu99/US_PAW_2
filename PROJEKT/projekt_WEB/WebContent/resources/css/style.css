@@ -184,6 +184,16 @@ font.e {
 	bordeR: none;
 	font-size: 1.2em;
 	text-align: center;
+	margin-left: 120px;
+}
+.ui-messages-error-detail{
+	display: none;
+}
+
+.edycja{
+	margin-top: 10px;
+	text-align: right;
+	display: block;
 }
 
 /* -------------------------------- footer --------------------------------------- */

@@ -23,10 +23,8 @@
 /Logowanie.jsf : PUBLIC;
 /Rejestracja.jsf : PUBLIC;
 /Aktualnosci.jsf : PUBLIC;
-/Kategoria.jsf : PUBLIC;
 /Post.jsf : PUBLIC;
-/Zarzadzaj.jsf : admin;
-/Konto.jsf : user, admin;
+/NowyPost.jsf : autor, admin;
 			</param-value>
 		</init-param>
 		<init-param>

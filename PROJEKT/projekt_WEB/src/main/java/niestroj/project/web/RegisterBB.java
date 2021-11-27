@@ -66,7 +66,7 @@ public class RegisterBB {
 		Uzytkownik user = new Uzytkownik();
 		user.setNick(login);
 		user.setHaslo(pass);
-		user.setRola(1);
+		user.setRola(2); //komentator
 		user.setDataRejestracji(new Date());
 		uzytkownikDAO.dodaj(user);
 		
