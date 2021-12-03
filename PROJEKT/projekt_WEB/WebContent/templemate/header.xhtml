@@ -24,9 +24,15 @@
 	                </div>
 	                <ol>
 	                    <li><h:link value="Aktualności" outcome="Aktualnosci" /></li>
-	                    <li><a href="#" class="activ">Kategorie</a></li>
-	                    <li><h:link value="Logowanie" outcome="Logowanie" /></li>
-	                    <li><h:link value="Rejestracja" outcome="Rejestracja" /></li>
+	                    <li><h:link value="Kategorie" outcome="Kategoria" /></li>
+	                    <c:if test="#{empty remoteClient.details.nick}">
+		                    <li><h:link value="Logowanie" outcome="Logowanie" /></li>
+		                    <li><h:link value="Rejestracja" outcome="Rejestracja" /></li>
+	                    </c:if>
+	                    <c:if test="#{not empty remoteClient.details.nick}">
+		                    <li><h:link value="Moje posty" outcome="Aktualnosci?autor=#{remoteClient.details.uid}" /></li>
+		                    <li><h:link value="Użytkownicy" outcome="Uzytkownik" /></li>
+	                    </c:if>
 	                </ol>
 	            </nav>
 	        </div>

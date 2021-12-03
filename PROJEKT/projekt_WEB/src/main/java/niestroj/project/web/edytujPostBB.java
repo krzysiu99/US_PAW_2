@@ -10,12 +10,17 @@ import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
+import javax.faces.simplesecurity.RemoteClient;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import niestroj.project.dao.PostDAO;
+import niestroj.project.dao.UzytkownikDAO;
 import niestroj.project.entities.Post;
+import niestroj.project.entities.Uzytkownik;
 
 @Named
 @ViewScoped
@@ -27,6 +32,9 @@ public class edytujPostBB implements Serializable {
 
 	private Post post = new Post();
 	private Post loaded = null;
+	
+	@EJB
+	UzytkownikDAO uzytkownikDAO;
 
 	@EJB
 	PostDAO postDAO;
@@ -45,36 +53,33 @@ public class edytujPostBB implements Serializable {
 
 		loaded = (Post) flash.get("post");
 
-		// cleaning: attribute received => delete it from session
 		if (loaded != null) {
 			post = loaded;
-			// session.removeAttribute("person");
 		} else {
-			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "B³êdne u¿ycie systemu", null));
-//			if (!context.isPostback()) { //possible redirect
-//				context.getExternalContext().redirect("Aktualnosci.jsf");
-//				context.responseComplete();
-//			}
+			context.getApplication().getNavigationHandler().
+				handleNavigation(FacesContext.getCurrentInstance(), null, "Aktualnosci.jsf?faces-redirect=true");
 		}
 		
 		if(post.getDataPublikacji() == null) {
 			post.setDataPublikacji(data());
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			Object user2 = context.getExternalContext().getSessionMap().get("user");
+			Uzytkownik user = uzytkownikDAO.szukaj(user2);
+			post.setUzytkownik(user);
 		}
 
 	}
 
 	public String saveData() {
-		// no Person object passed
 		if (loaded == null) {
 			return PAGE_STAY_AT_THE_SAME;
 		}
 
 		try {
 			if (post.getPid() == null) {
-				// new record
 				postDAO.dodaj(post);
 			} else {
-				// existing record
 				postDAO.aktualizuj(post);
 			}
 		} catch (Exception e) {

@@ -23,6 +23,8 @@
 /Logowanie.jsf : PUBLIC;
 /Rejestracja.jsf : PUBLIC;
 /Aktualnosci.jsf : PUBLIC;
+/Kategoria.jsf : PUBLIC;
+/Uzytkownik.jsf : komentator, autor, admin;
 /Post.jsf : PUBLIC;
 /NowyPost.jsf : autor, admin;
 			</param-value>

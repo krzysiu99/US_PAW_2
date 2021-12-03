@@ -1,5 +1,6 @@
 package niestroj.project.web;
 
+import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -9,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import niestroj.project.dao.PostDAO;
 import niestroj.project.entities.Post;
+import niestroj.project.entities.Uzytkownik;
 
 @Named
 @RequestScoped
@@ -26,9 +28,29 @@ public class AktualnosciBB {
 	@EJB
 	PostDAO postDAO;
 	
+	private String kategoria = "";
+	private Integer autor = null;
 	
+	
+	
+	public Integer getAutor() {
+		return autor;
+	}
+
+	public void setAutor(Integer autor) {
+		this.autor = autor;
+	}
+
+	public String getKategoria() {
+		return kategoria;
+	}
+
+	public void setKategoria(String kategoria) {
+		this.kategoria = kategoria;
+	}
+
 	public List<Post> getList(){
-		List<Post> list =  postDAO.lista();
+		List<Post> list =  postDAO.lista(kategoria,autor);
 		return list;
 	}
 	
@@ -37,7 +59,7 @@ public class AktualnosciBB {
 		Post post = new Post();
 		flash.put("post", post);
 		
-		return PAGE_POST;
+		return PAGE_POST_EDIT;
 	}
 	
 	public String edytujPost(Post post){
@@ -58,4 +80,5 @@ public class AktualnosciBB {
 		postDAO.kasuj(post);
 		return PAGE_STAY_AT_THE_SAME;
 	}
+	
 }

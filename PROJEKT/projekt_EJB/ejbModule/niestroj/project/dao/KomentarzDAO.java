@@ -15,20 +15,14 @@ public class KomentarzDAO {
 	@PersistenceContext
 	EntityManager em;
 	
+	
 	public void dodaj(Komentarz komentarz) {
 		em.persist(komentarz);
 	}
 	
-	public Komentarz aktualizuj(Komentarz komentarz) {
-		if(komentarz != null)
-			return em.merge(komentarz);
-		else 
-			return null;
-	}
 
 	public void kasuj(Komentarz komentarz) {
-		if(komentarz != null)
-			em.remove(em.merge(komentarz));
+		em.remove(em.merge(komentarz));
 	}
 
 	public Komentarz szukaj(Object id) {
@@ -36,10 +30,11 @@ public class KomentarzDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Komentarz> lista() {
+	public List<Komentarz> lista(int post) {
 		List<Komentarz> list = null;
 
-		Query query = em.createQuery("select k from Komentarz k");
+		Query query = em.createQuery("select k from Komentarz k where post like :post order by kid desc");
+		query.setParameter("post", post);
 
 		try {
 			list = query.getResultList();

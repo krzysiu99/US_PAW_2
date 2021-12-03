@@ -9,7 +9,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Class representing remote client in web applications.
  *   
- * @author Przemys≈Çaw Kud≈Çacik
+ * @author Przemys≥aw Kud≥acik
  *
  * @param <T> Any class allowing to store additional information to session (i.e. User entity)
  */

@@ -56,11 +56,15 @@ public class LoginBB {
 					"Niepoprawny login lub has³o", null));
 			return PAGE_STAY_AT_THE_SAME;
 		}
+		
+		FacesContext context = FacesContext.getCurrentInstance();
+		context.getExternalContext().getSessionMap().put("user", user.getUid());
 
 		// 3. if logged in: get User roles, save in RemoteClient and store it in session
 		
 		RemoteClient<Uzytkownik> client = new RemoteClient<Uzytkownik>(); //create new RemoteClient
 		client.setDetails(user);
+		
 		
 		List<String> roles = uzytkownikDAO.getUserRolesFromDatabase(user); //get User roles 
 		

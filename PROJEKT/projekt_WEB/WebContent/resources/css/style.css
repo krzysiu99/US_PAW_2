@@ -195,7 +195,16 @@ font.e {
 	text-align: right;
 	display: block;
 }
-
+.posttitle {
+    display: inline-block !IMPORTANT;
+    border: none !IMPORTANT;
+    background: transparent !IMPORTANT;
+    box-shadow: none !IMPORTANT;
+    padding: 0 !IMPORTANT;
+    margin: 0 !IMPORTANT;
+    height: auto !IMPORTANT;
+    line-height: normal !IMPORTANT;
+}
 /* -------------------------------- footer --------------------------------------- */
 #footer{
 	widtH: 1162px;

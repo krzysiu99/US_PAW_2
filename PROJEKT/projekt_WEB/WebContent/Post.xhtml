@@ -7,8 +7,11 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:c="http://java.sun.com/jstl/core">
 	
+
 <f:metadata>
-    <f:viewAction action="#{postBB.onLoad()}" />
+	<f:viewParam name="p" value="#{postBB.post.pid}"
+		converterMessage="Nieoczekiwany błąd"/>
+	<f:event type="preRenderView" listener="#{postBB.onLoad()}" />
 </f:metadata>
 	
 	
@@ -39,9 +42,35 @@
 					    <span class="right">#{postBB.post.dataPublikacji}</span>
 			        </f:facet>
 			    </p:panel>
+			 </h:form>
 			    
 			    <h1>Komentarze do tego postu</h1>
 			    
+			<h:form rendered="#{postBB.post != null}" id="fo">
+			    <p:panel toggleable="false" header="dodaj komentarz" style="width: 400px;margin: 0 auto;" rendered="#{remoteClient.details.nick != null}">
+						<h:panelGrid columns="2" cellpadding="5">
+			
+							<h:outputLabel for="p-name" value="autor:" />
+							<p:inputText id="p-name2" value="#{postBB.komentarz.uzytkownik.nick}"
+								readonly="true">
+							</p:inputText>
+							
+							<h:outputLabel for="p-name3" value="data:" />
+							<p:inputText id="p-name3" value="#{postBB.komentarz.czasPublikacji}">
+							</p:inputText>
+			
+							<h:outputLabel for="p-surname" value="treść:" />
+							<p:inputText id="p-surname" value="#{postBB.komentarz.tresc}"
+								required="true" requiredMessage="treść jest wymagana"
+								validatorMessage="1 - 50 znaków">
+								<f:validateLength maximum="50" minimum="1" />
+							</p:inputText>
+			
+							<p:commandButton value="Zapisz" action="#{postBB.saveData()}" update="fo"
+								style="margin-right: 1em;" />
+						</h:panelGrid>
+					</p:panel>
+					
 			    <ui:repeat value="#{postBB.list}" var="k">
 				    <p:panel>
 				    	<f:facet name="header">
@@ -55,7 +84,7 @@
 				        <c:if test="#{not empty remoteClient.details.nick and (remoteClient.details.rola == '0' or remoteClient.details.nick == k.uzytkownik.nick)}">
 				        <p class="edycja">
 							<p:commandButton value="Usuń"
-								action="#{postBB.kasujKomentarz(k)}" update="@form" />
+								action="#{postBB.kasujKomentarz(k)}" update="fo" />
 				        </p>
 				        </c:if>
 				        <f:facet name="footer">

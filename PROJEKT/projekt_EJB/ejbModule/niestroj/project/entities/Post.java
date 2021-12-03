@@ -45,7 +45,7 @@ public class Post implements Serializable {
 		return this.pid;
 	}
 
-	public void setPid(int pid) {
+	public void setPid(Integer pid) {
 		this.pid = pid;
 	}
 

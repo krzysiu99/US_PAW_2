@@ -32,10 +32,37 @@ public class PostDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Post> lista() {
+	public List<Post> lista(String kategoria, Integer autor) {
 		List<Post> list = null;
+		Query query;
 
-		Query query = em.createQuery("select p from Post p");
+		if(kategoria.equals("")) {
+			if(autor == null)
+				query = em.createQuery("select p from Post p order by pid desc");
+			else {
+				query = em.createQuery("select p from Post p where autor = :autor order by pid desc");
+				query.setParameter("autor", autor);
+			}
+		}
+		else {
+			query = em.createQuery("select p from Post p where kategoria = :kategoria order by pid desc");
+			query.setParameter("kategoria", kategoria);
+		}
+
+		try {
+			list = query.getResultList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<String> listaKategorii() {
+		List<String> list = null;
+
+		Query query = em.createQuery("select DISTINCT kategoria from Post group by kategoria");
 
 		try {
 			list = query.getResultList();

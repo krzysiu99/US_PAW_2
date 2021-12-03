@@ -2,7 +2,6 @@ package niestroj.project.entities;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 
 /**
@@ -19,7 +18,7 @@ public class Komentarz implements Serializable {
 	private int kid;
 
 	@Column(name="czas_publikacji")
-	private Timestamp czasPublikacji;
+	private String czasPublikacji;
 
 	private String tresc;
 
@@ -44,12 +43,12 @@ public class Komentarz implements Serializable {
 		this.kid = kid;
 	}
 
-	public Timestamp getCzasPublikacji() {
+	public String getCzasPublikacji() {
 		return this.czasPublikacji;
 	}
 
-	public void setCzasPublikacji(Timestamp czasPublikacji) {
-		this.czasPublikacji = czasPublikacji;
+	public void setCzasPublikacji(String tm) {
+		this.czasPublikacji = tm;
 	}
 
 	public String getTresc() {
@@ -64,8 +63,8 @@ public class Komentarz implements Serializable {
 		return this.postBean;
 	}
 
-	public void setPostBean(Post postBean) {
-		this.postBean = postBean;
+	public void setPostBean(Post post) {
+		this.postBean = post;
 	}
 
 	public Uzytkownik getUzytkownik() {

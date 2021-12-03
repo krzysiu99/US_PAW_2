@@ -26,10 +26,7 @@
 				<h:panelGrid columns="2" cellpadding="5">
 	
 					<h:outputLabel for="p-name" value="autor postu:" />
-					<p:inputText id="p-name" rendered="#{edytujPostBB.post.uzytkownik.nick != null}" value="#{edytujPostBB.post.uzytkownik.nick}"
-						readonly="true">
-					</p:inputText>
-					<p:inputText id="p-name2" rendered="#{edytujPostBB.post.uzytkownik.nick == null}" value="#{edytujPostBB.post.uzytkownik.nick}"
+					<p:inputText id="p-name" value="#{edytujPostBB.post.uzytkownik.nick}"
 						readonly="true">
 					</p:inputText>
 					

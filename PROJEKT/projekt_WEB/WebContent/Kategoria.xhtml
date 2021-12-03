@@ -6,54 +6,21 @@
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
-	<title>Aktualności test</title>
+	<title>Kategorie postów</title>
 </h:head>
 <h:body>
 	<ui:composition template="/templemate/szablon.xhtml">
 		<ui:define name="strona">
 		
 		
-			<ui:repeat value="#{aktualnosciBB.list}" var="p">
-			    <p:panel header="#{p.tytul}" >
-			        <p class="p-m-0">
-			            #{p.tresc}
-			        </p>
-			        <f:facet name="actions">
-			        	<p:link outcome="Uzytkownik" value="autor: #{p.uzytkownik.nick}">
-					        <f:param name="uid" value="#{p.uzytkownik.uid}"/>
-					    </p:link>
-			        </f:facet>
-			        <f:facet name="footer">
-			        	<p:link outcome="Kategoria" value="#{p.kategoria}">
-					        <f:param name="nazwa" value="#{p.kategoria}"/>
-					    </p:link>
-			        </f:facet>
+			<ui:repeat value="#{kategoriaBB.list}" var="a">
+			    <p:panel>
+			        <p:link outcome="Aktualnosci" value="#{a}">
+						<f:param name="kategoria" value="#{a}"/>
+					</p:link>
 			    </p:panel>
 
 	    	</ui:repeat>
-		
-			<!--  <h:form id="form-table" style="margin-bottom:1em;">
-				<p:dataTable value="#{aktualnosciBB.list}" var="p" style='displaY: block'
-					rowsPerPageTemplate="5" paginator="true" rows="5"
-					currentPageReportTemplate="{startRecord}-{endRecord} of {totalRecords} records"
-				 	paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink}">
-				 	
-				 	<h1>#{p.tytul}</h1>
-		
-					<p:column priority="5">
-						<f:facet name="header">
-							<h:outputText value="imię" />
-						</f:facet>
-						<h:outputText value="#{p.tytul}" />
-					</p:column>
-					<p:column>
-						<f:facet name="header">
-							<h:outputText value="nazwisko" />
-						</f:facet>
-						<h:outputText value="#{p.tresc}" />
-					</p:column>
-				</p:dataTable>
-			</h:form>-->
 			
 		</ui:define>
 	</ui:composition>

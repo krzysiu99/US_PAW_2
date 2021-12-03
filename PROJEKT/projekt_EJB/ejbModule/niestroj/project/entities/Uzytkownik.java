@@ -17,7 +17,7 @@ public class Uzytkownik implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int uid;
+	private Integer uid;
 
 	@Temporal(TemporalType.DATE)
 	@Column(name="data_rejestracji")
@@ -41,11 +41,11 @@ public class Uzytkownik implements Serializable {
 	public Uzytkownik() {
 	}
 
-	public int getUid() {
+	public Integer getUid() {
 		return this.uid;
 	}
 
-	public void setUid(int uid) {
+	public void setUid(Integer uid) {
 		this.uid = uid;
 	}
 
