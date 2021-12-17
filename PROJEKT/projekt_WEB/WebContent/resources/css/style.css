@@ -10,7 +10,7 @@ body {
     background-image: url("#{resource['images:back.png']}");
     background-position: top, left;
     background-size: 100% auto;
-    background-repeat: no-repeat
+    background-repeat: repeat-y;
 }
 /* -------------------------------- DIVY --------------------------------------- */
 #nav {
@@ -131,6 +131,18 @@ font.e {
 }
 .wyloguj:visited {
     color: white;
+}
+
+#licznik {
+    displaY: block;
+    position: relative;
+    background: purple;
+    color: white;
+    padding: 3px;
+    widtH: max-content;
+    border-radius: 20px;
+    top: -34px;
+    left: 82px;
 }
 
 /* -------------------------------- content --------------------------------------- */

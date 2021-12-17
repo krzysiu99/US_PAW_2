@@ -19,7 +19,7 @@ public class Kontakt implements Serializable {
 	private int wid;
 
 	@Column(name="czas_publikacji")
-	private Timestamp czasPublikacji;
+	private String czasPublikacji;
 
 	@Column(name="czy_przeczytano")
 	private int czyPrzeczytano;
@@ -40,11 +40,11 @@ public class Kontakt implements Serializable {
 		this.wid = wid;
 	}
 
-	public Timestamp getCzasPublikacji() {
+	public String getCzasPublikacji() {
 		return this.czasPublikacji;
 	}
 
-	public void setCzasPublikacji(Timestamp czasPublikacji) {
+	public void setCzasPublikacji(String czasPublikacji) {
 		this.czasPublikacji = czasPublikacji;
 	}
 

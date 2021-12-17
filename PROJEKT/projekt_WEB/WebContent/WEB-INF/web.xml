@@ -14,7 +14,7 @@
 		<filter-class>javax.faces.simplesecurity.SecurityFilter</filter-class>
 		<init-param>
 			<param-name>noPermitionPage</param-name>
-			<param-value>Logowanie.jsf</param-value>
+			<param-value>/Logowanie.jsf</param-value>
 		</init-param>
 		<init-param>
 			<param-name>permissions</param-name>
@@ -27,6 +27,7 @@
 /Uzytkownik.jsf : komentator, autor, admin;
 /Post.jsf : PUBLIC;
 /NowyPost.jsf : autor, admin;
+/Kontakt.jsf : PUBLIC;
 			</param-value>
 		</init-param>
 		<init-param>

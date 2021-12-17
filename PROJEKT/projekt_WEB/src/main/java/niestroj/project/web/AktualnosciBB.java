@@ -1,6 +1,5 @@
 package niestroj.project.web;
 
-import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -10,7 +9,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import niestroj.project.dao.PostDAO;
 import niestroj.project.entities.Post;
-import niestroj.project.entities.Uzytkownik;
 
 @Named
 @RequestScoped

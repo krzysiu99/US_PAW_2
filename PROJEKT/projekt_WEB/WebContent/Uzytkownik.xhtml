@@ -23,16 +23,17 @@
 				<h:panelGrid columns="2" cellpadding="5">
 	
 					<h:outputLabel for="p-name" value="nick:" />
-					<p:inputText id="p-name" value="#{uzytkownikBB.uzytkownik.nick}"
-						readonly="true">
+					<p:inputText id="p-name" value="#{uzytkownikBB.uzytkownik.nick}" required="true" requiredMessage="podaj nick"
+						validatorMessage="max 50 znaków">
+						<f:validateLength maximum="50" minimum="1" />
 					</p:inputText>
 	
-					<h:outputLabel for="p-surname" value="tytuł:" />
-					<p:inputText id="p-surname" value="#{uzytkownikBB.uzytkownik.haslo}"
+					<h:outputLabel for="toggle" value="hasło:" />
+					<p:password toggleMask="true" redisplay="true" id="toggle" value="#{uzytkownikBB.uzytkownik.haslo}"
 						required="true" requiredMessage="podaj hasło"
 						validatorMessage="1 - 50 znaków">
 						<f:validateLength maximum="50" minimum="1" />
-					</p:inputText>
+					</p:password>
 	
 					<h:outputLabel for="p-kat" value="Rola:" />
 					<p:selectOneMenu id="p-kat" value="#{uzytkownikBB.uzytkownik.rola}">
@@ -61,6 +62,7 @@
 			        <p:link outcome="Aktualnosci" value="#{u.nick}">
 						<f:param name="autor" value="#{u.uid}"/>
 					</p:link>
+					<span class="right">postów: #{uzytkownikBB.ilePostow(u.uid)}, komentarzy: #{uzytkownikBB.ileKomentarzy(u.uid)}</span>
 					<p class="edycja">
 			            <p:commandButton value="Edytuj użytkownika" 
 			            	rendered="#{remoteClient.details.rola == 0}"

@@ -22,13 +22,19 @@
 					<h:panelGrid columns="2" cellpadding="5" styleClass="bottom-space">
 						<p:graphicImage name="images/user.png" class="logimg"/>
 						<h:inputText id="login" class="logon" a:placeholder="nick" value="#{registerBB.login}"
-							required="true"	requiredMessage="podaj login"/>
+							required="true"	requiredMessage="podaj login" validatorMessage="przekroczono 50 znaków w loginie">
+							<f:validateLength maximum="50" minimum="1" />
+						</h:inputText>
 						<p:graphicImage name="images/lock.png" class="logimg"/>
 						<h:inputSecret id="pass" class="logon" a:placeholder="hasło" value="#{registerBB.pass}"
-						required="true"	requiredMessage="podaj hasło"/>
+							required="true"	requiredMessage="podaj hasło" validatorMessage="przekroczono 50 znaków w haśle">
+							<f:validateLength maximum="50" minimum="1" />
+						</h:inputSecret>
 						<p:graphicImage name="images/lock.png" class="logimg"/>
 						<h:inputSecret id="pass2" class="logon" a:placeholder="powtórz hasło" value="#{registerBB.pass2}"
-						required="true"	requiredMessage="podaj hasło"/>
+						required="true"	requiredMessage="podaj hasło 2" validatorMessage="przekroczono 50 znaków w haśle 2">
+							<f:validateLength maximum="50" minimum="1" />
+						</h:inputSecret>
 					</h:panelGrid>
 				
 					<h:commandButton value="Zarejestruj" class="logsub" action="#{registerBB.doRegister()}" update="msg" />

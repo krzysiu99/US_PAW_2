@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<f:metadata>
+	<f:event type="preRenderView" listener="#{kontaktBB.onLoad()}" />
+</f:metadata>
+	
+<h:head>
+	<title>Kontakt</title>
+</h:head>
+<h:body>
+	<ui:composition template="/templemate/szablon.xhtml">
+		<ui:define name="strona" id="str">
+			    
+			<h:form rendered="#{remoteClient.details.rola != '0'}" id="fo">
+			    <p:panel toggleable="false" header="Kontakt" style="width: 400px;margin: 0 auto;">
+						<p:messages id="messages" showDetail="true" closable="false">
+				            <p:autoUpdate/>
+				        </p:messages>
+						<h:panelGrid columns="2" cellpadding="5">
+			
+							<h:outputLabel for="p-name3" value="data:" />
+							<p:inputText id="p-name3" value="#{kontaktBB.kontakt.czasPublikacji}" readonly="true" />
+							
+							<h:outputLabel for="p-name" value="nadawca:" />
+							<p:inputText id="p-name2" value="#{kontaktBB.kontakt.nadawca}"
+								required="true" requiredMessage="nadawca jest wymagany"
+								validatorMessage="nadawca: max 50 znaków">
+								<f:validateLength maximum="50" minimum="1" />
+							</p:inputText>
+			
+							<h:outputLabel for="p-surname" value="treść:" />
+							<p:inputText id="p-surname" value="#{kontaktBB.kontakt.tresc}"
+								required="true" requiredMessage="treść jest wymagana"
+								validatorMessage="treść: max 200 znaków">
+								<f:validateLength maximum="200" minimum="1" />
+							</p:inputText>
+			
+							<p:commandButton value="Zapisz" action="#{kontaktBB.saveData()}" render=":str"
+								style="margin-right: 1em;" />
+						</h:panelGrid>
+					</p:panel>
+					
+				</h:form>
+				
+				<h:form rendered="#{remoteClient.details.rola == '0'}" id="fo2">
+					
+			    <ui:repeat value="#{kontaktBB.list}" var="k">
+				    <p:panel>
+				    	<f:facet name="header">
+				        	#{k.nadawca}
+				        </f:facet>
+				        <p class="p-m-0">
+				            #{k.tresc}
+				        </p>
+				        <p class="edycja">
+							<p:commandButton value="Usuń"
+								action="#{kontaktBB.kasuj(k)}" update="@form" />
+							<p:commandButton value="Oznacz jako przeczytane" rendered="#{k.czyPrzeczytano == '0'}"
+								action="#{kontaktBB.przeczytano(k)}" update="@form" />
+				        </p>
+				        <f:facet name="footer">
+				        	#{k.czasPublikacji}
+				        </f:facet>
+				    </p:panel>
+		    	</ui:repeat>
+			    
+			    
+			  </h:form>
+			
+		</ui:define>
+	</ui:composition>
+
+</h:body>
+</html>

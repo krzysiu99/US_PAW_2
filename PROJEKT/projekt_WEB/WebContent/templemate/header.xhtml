@@ -10,7 +10,7 @@
 	
 			<div id="nav">
 	            <nav>
-	                <a href="" title="Strona Główna"><img src="#{resource['images:logo.png']}" alt="nagłówek"/></a>
+	                <h:link outcome="Aktualnosci"><img src="#{resource['images:logo.png']}" alt="nagłówek"/></h:link>
 	                <div id="login">
 		                <c:if test="#{not empty remoteClient.details.nick}">
 		               		<h:form style="display:inline;">
@@ -33,6 +33,12 @@
 		                    <li><h:link value="Moje posty" outcome="Aktualnosci?autor=#{remoteClient.details.uid}" /></li>
 		                    <li><h:link value="Użytkownicy" outcome="Uzytkownik" /></li>
 	                    </c:if>
+	                    <li>
+	                    	<h:link value="Kontakt" outcome="Kontakt" />
+	                    	<c:if test="#{remoteClient.details.rola == '0' and kontaktBB.licznik() > '0'}">
+		                    	<div id="licznik" title="nowe wiadomości">#{kontaktBB.licznik()}</div>
+	                    	</c:if>
+	                    </li>
 	                </ol>
 	            </nav>
 	        </div>

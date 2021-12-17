@@ -19,12 +19,16 @@
 			            <p:autoUpdate/>
 			        </p:messages>
 					
-					<p:graphicImage name="images/user.png" class="logimg"/>
+					<p:graphicImage name="images/user.png" styleClass="logimg"/>
 					<h:inputText id="login" class="logon" a:placeholder="nick" value="#{loginBB.login}"
-						required="true"	requiredMessage="podaj login"/><br />
-					<p:graphicImage name="images/lock.png" class="logimg"/>
+						required="true"	requiredMessage="podaj login" validatorMessage="przekroczono 50 znaków">
+						<f:validateLength maximum="50" minimum="1" />
+					</h:inputText><br />
+					<p:graphicImage name="images/lock.png" styleClass="logimg" />
 					<h:inputSecret id="pass" class="logon" a:placeholder="hasło" value="#{loginBB.pass}"
-					required="true"	requiredMessage="podaj hasło"/><br />
+						required="true"	requiredMessage="podaj hasło" validatorMessage="przekroczono 50 znaków">
+						<f:validateLength maximum="50" minimum="1" />
+					</h:inputSecret><br />
 
 					<h:commandButton value="Zaloguj się" class="logsub" action="#{loginBB.doLogin()}" update="msg" />
 			</h:form>

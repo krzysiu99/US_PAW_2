@@ -9,6 +9,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import niestroj.project.dao.KomentarzDAO;
 import niestroj.project.dao.PostDAO;
 import niestroj.project.dao.UzytkownikDAO;
 import niestroj.project.entities.Post;
@@ -27,6 +29,12 @@ public class UzytkownikBB {
 	
 	@EJB
 	UzytkownikDAO uzytkownikDAO;
+	
+	@EJB
+	PostDAO postDAO;
+	
+	@EJB
+	KomentarzDAO komentarzDAO;
 	
 	private Uzytkownik loaded = null;
 	private Uzytkownik uzytkownik = null;
@@ -85,5 +93,16 @@ public class UzytkownikBB {
 		}
 
 		return PAGE_STAY_AT_THE_SAME;
+	}
+	
+	public String ilePostow(Integer uid) {
+		Integer i = postDAO.ile(uid);
+		String ile = i.toString();
+		return ile;
+	}
+	public String ileKomentarzy(Integer uid) {
+		Integer i = komentarzDAO.ile(uid);
+		String ile = i.toString();
+		return ile;
 	}
 }

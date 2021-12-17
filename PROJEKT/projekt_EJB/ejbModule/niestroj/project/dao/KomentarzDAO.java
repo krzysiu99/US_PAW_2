@@ -21,8 +21,15 @@ public class KomentarzDAO {
 	}
 	
 
-	public void kasuj(Komentarz komentarz) {
-		em.remove(em.merge(komentarz));
+	public void kasuj(Komentarz komentarz) {	
+		Query query;
+		query = em.createQuery("delete from Komentarz where KID = :komentarz");
+		query.setParameter("komentarz", komentarz.getKid());
+		try {
+			query.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	public Komentarz szukaj(Object id) {
@@ -43,5 +50,20 @@ public class KomentarzDAO {
 		}
 
 		return list;
+	}
+	
+	public Integer ile(Integer user) {
+		Integer i = 0;
+
+		Query query = em.createQuery("select COUNT(*) FROM Komentarz where autor = :user");
+		query.setParameter("user", user);
+
+		try {
+			i = (int) (long) query.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return i;
 	}
 }

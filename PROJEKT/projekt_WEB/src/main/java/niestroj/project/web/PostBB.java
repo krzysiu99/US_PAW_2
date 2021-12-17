@@ -24,6 +24,7 @@ import niestroj.project.entities.Uzytkownik;
 @RequestScoped
 public class PostBB implements Serializable{
 	private static final long serialVersionUID = 1L;
+	private static final String PAGE_STAY_AT_THE_SAME = null;
 	
 	private Post post = new Post();
 	private Komentarz komentarz = new Komentarz();
@@ -67,11 +68,11 @@ public class PostBB implements Serializable{
 				
 				FacesContext context = FacesContext.getCurrentInstance();
 				Object user2 = context.getExternalContext().getSessionMap().get("user");
-				Uzytkownik user = uzytkownikDAO.szukaj(user2);
-				komentarz.setUzytkownik(user);
-				
-				
-				komentarz.setPostBean(post);
+				if(user2 != null) {
+					Uzytkownik user = uzytkownikDAO.szukaj(user2);
+					komentarz.setUzytkownik(user);
+					komentarz.setPostBean(post);
+				}
 			} else {
 				context.getApplication().getNavigationHandler().
 					handleNavigation(FacesContext.getCurrentInstance(), null, "Aktualnosci.jsf?faces-redirect=true");
@@ -84,14 +85,15 @@ public class PostBB implements Serializable{
 		return list;
 	}
 	
-	public String kasujKomentarz(Komentarz komentarz){
+	public String kasuj(Komentarz komentarz){
 		komentarzDAO.kasuj(komentarz);
-		return null;
+		return "Post.jsf?faces-redirect=true&p="+post.getPid();
 	}
 	
 	public String saveData() {
 		try {
 			komentarz.setPostBean(post);
+			komentarz.setCzasPublikacji(data());
 			
 			FacesContext context = FacesContext.getCurrentInstance();
 			Object user2 = context.getExternalContext().getSessionMap().get("user");
@@ -107,7 +109,7 @@ public class PostBB implements Serializable{
 			return null;
 		}
 
-		return null;
+		return "Post.jsf?faces-redirect=true&p="+post.getPid();
 	}
 	
 	public String data() {

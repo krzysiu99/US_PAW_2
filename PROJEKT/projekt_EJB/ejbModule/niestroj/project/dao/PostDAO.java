@@ -72,4 +72,19 @@ public class PostDAO {
 
 		return list;
 	}
+	
+	public Integer ile(Integer user) {
+		Integer i = 0;
+
+		Query query = em.createQuery("select COUNT(*) FROM Post where autor = :user");
+		query.setParameter("user", user);
+
+		try {
+			i = (int) (long) query.getSingleResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return i;
+	}
 }

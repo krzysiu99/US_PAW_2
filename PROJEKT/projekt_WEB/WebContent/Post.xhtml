@@ -4,8 +4,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui"
-	xmlns:c="http://java.sun.com/jstl/core">
+	xmlns:p="http://primefaces.org/ui">
 	
 
 <f:metadata>
@@ -20,7 +19,7 @@
 </h:head>
 <h:body>
 	<ui:composition template="/templemate/szablon.xhtml">
-		<ui:define name="strona">
+		<ui:define name="strona" id="str">
 		
 			<h:form rendered="#{postBB.post != null}">
 			    <p:panel>
@@ -48,6 +47,9 @@
 			    
 			<h:form rendered="#{postBB.post != null}" id="fo">
 			    <p:panel toggleable="false" header="dodaj komentarz" style="width: 400px;margin: 0 auto;" rendered="#{remoteClient.details.nick != null}">
+						<p:messages id="messages" showDetail="true" closable="false">
+				            <p:autoUpdate/>
+				        </p:messages>
 						<h:panelGrid columns="2" cellpadding="5">
 			
 							<h:outputLabel for="p-name" value="autor:" />
@@ -56,37 +58,38 @@
 							</p:inputText>
 							
 							<h:outputLabel for="p-name3" value="data:" />
-							<p:inputText id="p-name3" value="#{postBB.komentarz.czasPublikacji}">
+							<p:inputText id="p-name3" value="#{postBB.komentarz.czasPublikacji}" readonly="true">
 							</p:inputText>
 			
 							<h:outputLabel for="p-surname" value="treść:" />
 							<p:inputText id="p-surname" value="#{postBB.komentarz.tresc}"
 								required="true" requiredMessage="treść jest wymagana"
-								validatorMessage="1 - 50 znaków">
+								validatorMessage="max 50 znaków">
 								<f:validateLength maximum="50" minimum="1" />
 							</p:inputText>
 			
-							<p:commandButton value="Zapisz" action="#{postBB.saveData()}" update="fo"
+							<p:commandButton value="Zapisz" action="#{postBB.saveData()}" render=":str"
 								style="margin-right: 1em;" />
 						</h:panelGrid>
 					</p:panel>
 					
+				</h:form>
+				<h:form rendered="#{postBB.post != null}" id="fo2">
+					
 			    <ui:repeat value="#{postBB.list}" var="k">
 				    <p:panel>
 				    	<f:facet name="header">
-				        	<p:link outcome="Uzytkownik" value="autor: #{k.uzytkownik.nick}">
-						        <f:param name="uid" value="#{k.uzytkownik.uid}"/>
+				        	<p:link outcome="Aktualnosci" value="autor: #{k.uzytkownik.nick}">
+						        <f:param name="autor" value="#{k.uzytkownik.uid}"/>
 						    </p:link>
 				        </f:facet>
 				        <p class="p-m-0">
 				            #{k.tresc}
 				        </p>
-				        <c:if test="#{not empty remoteClient.details.nick and (remoteClient.details.rola == '0' or remoteClient.details.nick == k.uzytkownik.nick)}">
 				        <p class="edycja">
-							<p:commandButton value="Usuń"
-								action="#{postBB.kasujKomentarz(k)}" update="fo" />
+							<p:commandButton value="Usuń" rendered="#{remoteClient.details.nick != '' and (remoteClient.details.rola == '0' or remoteClient.details.nick == k.uzytkownik.nick)}"
+								action="#{postBB.kasuj(k)}" update="@form" />
 				        </p>
-				        </c:if>
 				        <f:facet name="footer">
 				        	#{k.czasPublikacji}
 				        </f:facet>

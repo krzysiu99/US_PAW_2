@@ -37,13 +37,12 @@
 					<h:outputLabel for="p-surname" value="tytuł:" />
 					<p:inputText id="p-surname" value="#{edytujPostBB.post.tytul}"
 						required="true" requiredMessage="podaj tytuł"
-						validatorMessage="1 - 50 znaków">
+						validatorMessage="limit 50 znaków dla tytułu">
 						<f:validateLength maximum="50" minimum="1" />
 					</p:inputText>
 	
 					<h:outputLabel for="p-kat" value="kategoria:" />
 					<p:selectOneMenu id="p-kat" value="#{edytujPostBB.post.kategoria}">
-	                    <f:selectItem itemLabel="[Wybierz z listy]" itemValue=""/>
 	                    <f:selectItem itemLabel="Windows" itemValue="Windows"/>
 	                    <f:selectItem itemLabel="Google Chrome" itemValue="Google Chrome"/>
 	                    <f:selectItem itemLabel="Excel" itemValue="Excel"/>
@@ -52,7 +51,10 @@
 				</h:panelGrid>
 				<h:panelGrid columns="1">
                 	<p:inputTextarea rows="5" cols="80" counter="display" maxlength="1000" minlength="1" value="#{edytujPostBB.post.tresc}"
-                         counterTemplate="pozostało znaków: {0}" autoResize="false"/>
+                         counterTemplate="pozostało znaków: {0}" autoResize="false" validatorMessage="limit 1000 znaków dla treści"
+                         required="true" requiredMessage="uzupełnij treść">
+                         <f:validateLength maximum="1000" minimum="1" />
+                    </p:inputTextarea>
         			<h:outputText id="display" class="p-d-block" />
         		</h:panelGrid> 
 	
