@@ -33,10 +33,15 @@ public class UzytkownikDAO {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Uzytkownik> lista() {
+	public List<Uzytkownik> lista(Integer uid) {
 		List<Uzytkownik> list = null;
-
-		Query query = em.createQuery("select u from Uzytkownik u");
+		Query query;
+		if(uid == null) {
+			query = em.createQuery("select u from Uzytkownik u");
+		} else {
+			query = em.createQuery("select u from Uzytkownik u where uid = :uid");
+			query.setParameter("uid", uid);
+		}
 
 		try {
 			list = query.getResultList();
@@ -50,7 +55,7 @@ public class UzytkownikDAO {
 	public Boolean checkExists(String login) {
 		Boolean ex = false;
 		
-		List<Uzytkownik> lista = lista();
+		List<Uzytkownik> lista = lista(null);
 		
 		for(Uzytkownik userek : lista){
 			String nick = userek.getNick();
@@ -68,7 +73,7 @@ public class UzytkownikDAO {
 		
 		Uzytkownik u = null;
 		
-		List<Uzytkownik> lista = lista();
+		List<Uzytkownik> lista = lista(null);
 		
 		for(Uzytkownik userek : lista){
 			String nick = userek.getNick();

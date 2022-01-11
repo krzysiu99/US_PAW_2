@@ -24,7 +24,6 @@ import niestroj.project.entities.Uzytkownik;
 @RequestScoped
 public class PostBB implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private static final String PAGE_STAY_AT_THE_SAME = null;
 	
 	private Post post = new Post();
 	private Komentarz komentarz = new Komentarz();

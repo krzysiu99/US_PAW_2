@@ -93,6 +93,12 @@ section a{
 section a img {
     width: 80px;
 }
+.strony{
+	margin: 5px;
+	background: white;
+	text-align: center;
+	padding: 7px 15px;
+}
 /* -------------------------------- menu nav --------------------------------------- */
 div#login {
     min-width: 600px;

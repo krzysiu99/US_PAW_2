@@ -7,6 +7,8 @@
 	xmlns:p="http://primefaces.org/ui">
 	
 <f:metadata>
+	<f:viewParam name="uid" value="#{uzytkownikBB.uzytkownik.uid}"
+		converterMessage="Nieoczekiwany błąd"/>
     <f:viewAction action="#{uzytkownikBB.onLoad()}" />
 </f:metadata>
 
@@ -17,46 +19,36 @@
 	<ui:composition template="/templemate/szablon.xhtml">
 		<ui:define name="strona">
 		
-		<p:panel toggleable="false" header="Edycja uzytkownika" style="width: 700px;margin: 0 auto;"
-			rendered="#{uzytkownikBB.uzytkownik != null}">
-			<h:form>
-				<h:panelGrid columns="2" cellpadding="5">
-	
-					<h:outputLabel for="p-name" value="nick:" />
-					<p:inputText id="p-name" value="#{uzytkownikBB.uzytkownik.nick}" required="true" requiredMessage="podaj nick"
-						validatorMessage="max 50 znaków">
-						<f:validateLength maximum="50" minimum="1" />
-					</p:inputText>
-	
-					<h:outputLabel for="toggle" value="hasło:" />
-					<p:password toggleMask="true" redisplay="true" id="toggle" value="#{uzytkownikBB.uzytkownik.haslo}"
-						required="true" requiredMessage="podaj hasło"
-						validatorMessage="1 - 50 znaków">
-						<f:validateLength maximum="50" minimum="1" />
-					</p:password>
-	
-					<h:outputLabel for="p-kat" value="Rola:" />
-					<p:selectOneMenu id="p-kat" value="#{uzytkownikBB.uzytkownik.rola}">
-	                    <f:selectItem itemLabel="Administrator" itemValue="0"/>
-	                    <f:selectItem itemLabel="Autor" itemValue="1"/>
-	                    <f:selectItem itemLabel="Komentator" itemValue="2"/>
-                	</p:selectOneMenu>
-                </h:panelGrid>
-	
-				<p:messages id="msgs" />
-	
-				<p:commandButton value="Zapisz" action="#{uzytkownikBB.saveData()}"
-					style="margin-right: 1em;" update="@form" />
-	
-				<p:button value="Anuluj" outcome="Uzytkownik" />
+		<h:form rendered="#{uzytkownikBB.uzytkownik.uid != null and remoteClient.details.rola == 0}" id="fo">
+		    <p:panel toggleable="false" header="dodaj komentarz" style="width: 400px;margin: 0 auto;" rendered="#{remoteClient.details.nick != null}">
+					<p:messages id="messages" showDetail="true" closable="false">
+			            <p:autoUpdate/>
+			        </p:messages>
+					<h:panelGrid columns="2" cellpadding="5">
+		
+						<h:outputLabel for="p-name2" value="autor:" />
+						<p:inputText id="p-name2" value="#{uzytkownikBB.uzytkownik.nick}"/>
+						
+						<h:outputLabel for="p-name3" value="hasło:" />
+						<p:password autocomplete="false" id="p-name3" value="#{uzytkownikBB.uzytkownik.haslo}"/>
+						
+						<h:outputLabel for="p-name4" value="data rejestracji:" />
+						<p:datePicker id="p-name4" value="#{uzytkownikBB.uzytkownik.dataRejestracji}"/>
+		
+						<h:outputLabel for="p-surname" value="rola:" />
+						<p:selectOneMenu id="p-surname" value="#{uzytkownikBB.uzytkownik.rola}">
+		                    <f:selectItem itemLabel="Administrator" itemValue="0"/>
+		                    <f:selectItem itemLabel="Autor" itemValue="1"/>
+		                    <f:selectItem itemLabel="Komentator" itemValue="2"/>
+	                	</p:selectOneMenu>
+		
+						<p:commandButton value="Zapisz" action="#{uzytkownikBB.saveData()}" render=":str"
+							style="margin-right: 1em;" />
+					</h:panelGrid>
+				</p:panel>
 			</h:form>
-		</p:panel>
 		
-		
-		
-		
-		
-		<h:form rendered="#{uzytkownikBB.uzytkownik == null}">
+		<h:form rendered="#{uzytkownikBB.uzytkownik.uid == null}">
 			<ui:repeat value="#{uzytkownikBB.list}" var="u">
 			    <p:panel>
 			        <p:link outcome="Aktualnosci" value="#{u.nick}">
@@ -64,9 +56,9 @@
 					</p:link>
 					<span class="right">postów: #{uzytkownikBB.ilePostow(u.uid)}, komentarzy: #{uzytkownikBB.ileKomentarzy(u.uid)}</span>
 					<p class="edycja">
-			            <p:commandButton value="Edytuj użytkownika" 
-			            	rendered="#{remoteClient.details.rola == 0}"
-							action="#{uzytkownikBB.edytuj(u)}" />
+						<p:button outcome="Uzytkownik" value="Edytuj użytkownika" rendered="#{remoteClient.details.rola == 0}">
+							<f:param name="uid" value="#{u.uid}"/>
+						</p:button>
 						<p:commandButton value="Usuń użytkownika" 
 							rendered="#{remoteClient.details.rola == 0}"
 							action="#{uzytkownikBB.kasuj(u)}" update="@form" />

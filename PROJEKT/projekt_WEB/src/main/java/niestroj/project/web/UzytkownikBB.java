@@ -9,11 +9,9 @@ import javax.faces.context.FacesContext;
 import javax.faces.context.Flash;
 import javax.inject.Inject;
 import javax.inject.Named;
-
 import niestroj.project.dao.KomentarzDAO;
 import niestroj.project.dao.PostDAO;
 import niestroj.project.dao.UzytkownikDAO;
-import niestroj.project.entities.Post;
 import niestroj.project.entities.Uzytkownik;
 
 @Named
@@ -37,7 +35,7 @@ public class UzytkownikBB {
 	KomentarzDAO komentarzDAO;
 	
 	private Uzytkownik loaded = null;
-	private Uzytkownik uzytkownik = null;
+	private Uzytkownik uzytkownik = new Uzytkownik();
 	
 	
 	public Uzytkownik getUzytkownik() {
@@ -47,9 +45,24 @@ public class UzytkownikBB {
 	public void setUzytkownik(Uzytkownik uzytkownik) {
 		this.uzytkownik = uzytkownik;
 	}
+	
+
+	public Uzytkownik getLoaded() {
+		return loaded;
+	}
+	
+
+	public void setLoaded(Uzytkownik loaded) {
+		this.loaded = loaded;
+	}
 
 	public List<Uzytkownik> getList(){
-		List<Uzytkownik> list =  uzytkownikDAO.lista();
+		List<Uzytkownik> list;
+		if(loaded != null)
+			list = uzytkownikDAO.lista(loaded.getUid());
+		else
+			list = uzytkownikDAO.lista(null);
+		
 		return list;
 	}
 	
@@ -65,34 +78,31 @@ public class UzytkownikBB {
 		return PAGE_STAY_AT_THE_SAME;
 	}
 	
+	
 	public void onLoad() throws IOException {
-		if(flash.containsKey("uzytkownik"))
-			loaded = (Uzytkownik) flash.get("uzytkownik");
-
-		if (loaded != null) {
-			uzytkownik = loaded;
-		}
+			if (uzytkownik.getUid() != null) {
+				loaded = uzytkownikDAO.szukaj(uzytkownik.getUid());
+			}
+			if (loaded != null) {
+				uzytkownik = loaded;
+				
+			}
 	}
 	
 	public String saveData() {
-		if (loaded == null) {
-			return PAGE_STAY_AT_THE_SAME;
-		}
-
 		try {
-			if (uzytkownik.getUid() == null) {
-				uzytkownikDAO.dodaj(uzytkownik);
-			} else {
-				uzytkownikDAO.aktualizuj(uzytkownik);
-			}
+			
+			uzytkownikDAO.aktualizuj(uzytkownik);
+			
 		} catch (Exception e) {
+			FacesContext context = FacesContext.getCurrentInstance();
 			e.printStackTrace();
-			ctx.addMessage(null,
+			context.addMessage(null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "wyst¹pi³ b³¹d podczas zapisu", null));
-			return PAGE_STAY_AT_THE_SAME;
+			return null;
 		}
 
-		return PAGE_STAY_AT_THE_SAME;
+		return "Uzytkownik.jsf?faces-redirect=true&uid="+uzytkownik.getUid();
 	}
 	
 	public String ilePostow(Integer uid) {
@@ -105,4 +115,7 @@ public class UzytkownikBB {
 		String ile = i.toString();
 		return ile;
 	}
+	
+	
+	
 }

@@ -4,11 +4,15 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 	
 <f:metadata>
-	<f:viewParam name="kategoria" value="#{aktualnosciBB.kategoria}" converterMessage="Nieoczekiwany błąd"/>
-	<f:viewParam name="autor" value="#{aktualnosciBB.autor}" converterMessage="Nieoczekiwany błąd"/>
+	<f:viewParam name="kategoria" value="#{aktualnosciBB.kategoria}" required="false" converterMessage="Nieoczekiwany błąd"/>
+	<f:viewParam name="autor" value="#{aktualnosciBB.autor}" required="false" converterMessage="Nieoczekiwany błąd"/>
+	<f:viewParam name="strona" value="#{aktualnosciBB.strona}" required="false" converterMessage="Nieoczekiwany błąd"/>
+	
+	<f:event type="preRenderView" listener="#{aktualnosciBB.onLoad()}" />
 </f:metadata>
 	
 <h:head>
@@ -30,7 +34,7 @@
 						</p:button>
 			        </f:facet>
 			        <p class="p-m-0">
-			            #{p.tresc}
+			        	<h:outputText value=" #{fn:replace(p.tresc,'\\n','&lt;br/&gt;')}" escape="false" />
 			        </p>
 			        <p class="edycja">
 			            <p:commandButton value="Edytuj" 
@@ -53,6 +57,29 @@
 			        </f:facet>
 			    </p:panel>
 	    	</ui:repeat>
+	    	
+	    	<h:panelGrid columns="5" cellpadding="5">
+		    	<p:linkButton outcome="Aktualnosci.jsf" value="Początek" rendered="#{aktualnosciBB.strona > 0}">
+		    		<f:param name="autor" value="#{aktualnosciBB.autor}" rendered="#{not empty aktualnosciBB.autor}"/>
+			        <f:param name="kategoria" value="#{aktualnosciBB.kategoria}" rendered="#{not empty aktualnosciBB.kategoria}"/>
+			    </p:linkButton>
+			    <p:linkButton outcome="Aktualnosci.jsf" value="Poprzednia" rendered="#{aktualnosciBB.strona > 0}">
+			        <f:param name="strona" value="#{aktualnosciBB.strona-1}" rendered="#{aktualnosciBB.strona > 0}"/>
+			        <f:param name="autor" value="#{aktualnosciBB.autor}" rendered="#{not empty aktualnosciBB.autor}"/>
+			        <f:param name="kategoria" value="#{aktualnosciBB.kategoria}" rendered="#{not empty aktualnosciBB.kategoria}"/>
+			    </p:linkButton>
+			    <h:outputLabel value="#{aktualnosciBB.strona+1} / #{aktualnosciBB.stron}"  rendered="#{aktualnosciBB.stron > 1}" styleClass="strony"/>
+		    	<p:linkButton outcome="Aktualnosci.jsf" value="Następna"  rendered="#{aktualnosciBB.stron > aktualnosciBB.strona+1}">
+			        <f:param name="strona" value="#{aktualnosciBB.strona+1}"/>
+			        <f:param name="autor" value="#{aktualnosciBB.autor}" rendered="#{not empty aktualnosciBB.autor}"/>
+			        <f:param name="kategoria" value="#{aktualnosciBB.kategoria}" rendered="#{not empty aktualnosciBB.kategoria}"/>
+			    </p:linkButton>
+			    <p:linkButton outcome="Aktualnosci.jsf" value="Ostatnia"  rendered="#{aktualnosciBB.stron > aktualnosciBB.strona+1}">
+			    	<f:param name="strona" value="#{aktualnosciBB.stron-1}"/>
+			    	<f:param name="autor" value="#{aktualnosciBB.autor}" rendered="#{not empty aktualnosciBB.autor}"/>
+			        <f:param name="kategoria" value="#{aktualnosciBB.kategoria}" rendered="#{not empty aktualnosciBB.kategoria}"/>
+			    </p:linkButton>
+			   </h:panelGrid>
 	    </h:form>
 	    
 			

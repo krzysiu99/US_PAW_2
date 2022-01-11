@@ -1,5 +1,6 @@
 package niestroj.project.web;
 
+import java.io.IOException;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
@@ -28,6 +29,8 @@ public class AktualnosciBB {
 	
 	private String kategoria = "";
 	private Integer autor = null;
+	private Integer strona = 0;
+	private Integer stron = 0;
 	
 	
 	
@@ -48,10 +51,25 @@ public class AktualnosciBB {
 	}
 
 	public List<Post> getList(){
-		List<Post> list =  postDAO.lista(kategoria,autor);
+		List<Post> list =  postDAO.lista(kategoria,autor,strona);
 		return list;
 	}
 	
+	public void setStrona(Integer strona) {
+		if(strona>=0)
+			this.strona = strona;
+	}
+	
+	public Integer getStrona() {
+		return strona;
+	}
+	
+	
+
+	public Integer getStron() {
+		return stron;
+	}
+
 	public String nowyPost(){
 		
 		Post post = new Post();
@@ -77,6 +95,10 @@ public class AktualnosciBB {
 	public String kasujPost(Post post){
 		postDAO.kasuj(post);
 		return PAGE_STAY_AT_THE_SAME;
+	}
+	
+	public void onLoad() throws IOException {
+		this.stron = postDAO.stron(kategoria, autor);
 	}
 	
 }

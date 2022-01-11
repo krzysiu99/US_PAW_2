@@ -4,7 +4,8 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 	
 
 <f:metadata>
@@ -27,7 +28,7 @@
 			        	#{postBB.post.tytul}
 			        </f:facet>
 			        <p class="p-m-0">
-			            #{postBB.post.tresc}
+			        		<h:outputText value=" #{fn:replace(postBB.post.tresc,'\\n','&lt;br/&gt;')}" escape="false" />
 			        </p>
 			        <f:facet name="actions">
 			        	<p:link outcome="Uzytkownik" value="autor: #{postBB.post.uzytkownik.nick}">
@@ -86,10 +87,7 @@
 				        <p class="p-m-0">
 				            #{k.tresc}
 				        </p>
-				        <p class="edycja">
-							<p:commandButton value="Usuń" rendered="#{remoteClient.details.nick != '' and (remoteClient.details.rola == '0' or remoteClient.details.nick == k.uzytkownik.nick)}"
-								action="#{postBB.kasuj(k)}" update="@form" />
-				        </p>
+
 				        <f:facet name="footer">
 				        	#{k.czasPublikacji}
 				        </f:facet>
